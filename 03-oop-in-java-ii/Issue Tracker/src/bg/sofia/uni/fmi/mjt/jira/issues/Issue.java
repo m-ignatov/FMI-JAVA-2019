@@ -89,10 +89,6 @@ public abstract class Issue {
         return actionLog;
     }
 
-    public int getActionLogSize() {
-        return actionLogSize;
-    }
-
     public void addAction(WorkAction action, String description) {
         if (actionLogSize == ACTION_LOG_MAX_SIZE) {
             throw new UnsupportedOperationException("Action log size exceeded.");

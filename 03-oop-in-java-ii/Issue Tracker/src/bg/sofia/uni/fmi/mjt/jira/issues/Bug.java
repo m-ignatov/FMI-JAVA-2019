@@ -25,9 +25,8 @@ public class Bug extends Issue {
     }
 
     private boolean contains(String workAction) {
-        String[] actionLog = getActionLog();
-        for (int i = 0; i < getActionLogSize(); i++) {
-            if (actionLog[i].contains(workAction)) {
+        for (String action : getActionLog()) {
+            if (action.contains(workAction)) {
                 return true;
             }
         }
