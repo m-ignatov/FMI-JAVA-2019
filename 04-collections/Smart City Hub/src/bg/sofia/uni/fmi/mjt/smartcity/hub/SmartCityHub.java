@@ -11,11 +11,9 @@ import java.util.stream.Collectors;
 public class SmartCityHub {
 
     private Map<String, SmartDevice> smartDevices;
-    private List<String> smartDevicesByDate;
 
     public SmartCityHub() {
-        smartDevices = new HashMap<>();
-        smartDevicesByDate = new ArrayList<>();
+        smartDevices = new LinkedHashMap<>();
     }
 
     /**
@@ -32,7 +30,6 @@ public class SmartCityHub {
             throw new DeviceAlreadyRegisteredException(String.format("Device %s already exists", id));
         }
         smartDevices.put(id, device);
-        smartDevicesByDate.add(id);
     }
 
     /**
@@ -47,7 +44,6 @@ public class SmartCityHub {
         if (smartDevices.remove(device.getId()) == null) {
             throw new DeviceNotFoundException("Device does not exist");
         }
-        smartDevicesByDate.remove(device.getId());
     }
 
     /**
@@ -119,13 +115,11 @@ public class SmartCityHub {
         if (n < 0) {
             throw new IllegalArgumentException();
         }
-        int size = Math.min(n, smartDevicesByDate.size());
-        List<SmartDevice> smartDevicesByRegister = new ArrayList<>(size);
 
-        for (int i = 0; i < size; i++) {
-            smartDevicesByRegister.add(smartDevices.get(smartDevicesByDate.get(i)));
-        }
-        return smartDevicesByRegister;
+        return smartDevices.values()
+                .stream()
+                .limit(n)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private void validate(SmartDevice smartDevice) {
