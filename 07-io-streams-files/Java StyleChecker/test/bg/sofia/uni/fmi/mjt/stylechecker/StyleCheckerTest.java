@@ -29,15 +29,15 @@ public class StyleCheckerTest {
         Writer writer = new StringWriter();
 
         styleChecker.checkStyle(reader, writer);
-        String actual = writer.toString();
 
+        String actual = writer.toString();
         assertEquals(StyleChecker.WILDCARDS_IN_IMPORTS
                 + System.lineSeparator() + fileInput, actual.strip());
     }
 
     @Test
     public void givenMultipleStatementsPerLineWhenCheckStyleThenInsertOneStatementPerLineComment() {
-        String fileInput = "statement1; statement2;";
+        String fileInput = "count++; return count;";
         Reader reader = new StringReader(fileInput);
         Writer writer = new StringWriter();
 
@@ -50,7 +50,7 @@ public class StyleCheckerTest {
 
     @Test
     public void givenOneStatementPerLineWithMultipleSemicolonsWhenCheckStyleThenDoNotInsertComment() {
-        String input = "statement1;;;;";
+        String input = "return;;;;";
         Reader reader = new StringReader(input);
         Writer writer = new StringWriter();
 
@@ -62,7 +62,7 @@ public class StyleCheckerTest {
 
     @Test
     public void givenOpeningBracketOnSameLineWhenCheckStyleThenInsertOpeningBracketOnSameLineComment() {
-        String input = "{ statement;";
+        String input = "{ String test;";
         Reader reader = new StringReader(input);
         Writer writer = new StringWriter();
 
@@ -75,7 +75,7 @@ public class StyleCheckerTest {
 
     @Test
     public void givenInvalidPackageNameWhenCheckStyleThenInsertInvalidPackageNameComment() {
-        String input = "package com.SU.FMI_UNI.mjt;";
+        String input = "package com.sofia.FMI_UNI.mjt;";
         Reader reader = new StringReader(input);
         Writer writer = new StringWriter();
 
