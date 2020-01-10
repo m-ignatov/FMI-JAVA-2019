@@ -32,18 +32,12 @@ public class AuthorshipDetectorImpl implements AuthorshipDetector {
 
         Map<FeatureType, Double> features = new EnumMap<>(FeatureType.class);
 
-        String text = null;
-        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(mysteryText))) {
-            text = bufferedReader.lines()
-                    .collect(Collectors.joining("\n"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String text = parseText(mysteryText);
 
         List<String> tokens = getTokens(text);
-        List<String> words = getWords(tokens);
         List<String> sentences = getSentences(text);
         List<String> phrases = getPhrases(sentences);
+        List<String> words = getWords(tokens);
 
         features.put(FeatureType.HAPAX_LEGOMENA_RATIO, getHapaxLegomenaRatio(words));
         features.put(FeatureType.AVERAGE_WORD_LENGTH, getAverageWordLength(words));
@@ -54,6 +48,17 @@ public class AuthorshipDetectorImpl implements AuthorshipDetector {
         features.put(FeatureType.TYPE_TOKEN_RATIO, getTypeTokenRatio(words));
 
         return new LinguisticSignature(features);
+    }
+
+    private String parseText(InputStream mysteryText) {
+        String text = null;
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(mysteryText))) {
+            text = bufferedReader.lines()
+                    .collect(Collectors.joining("\n"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return text;
     }
 
     private List<String> getTokens(String text) {
