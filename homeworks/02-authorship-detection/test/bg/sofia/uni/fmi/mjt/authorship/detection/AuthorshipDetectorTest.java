@@ -3,6 +3,7 @@ package bg.sofia.uni.fmi.mjt.authorship.detection;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.EnumMap;
@@ -12,8 +13,13 @@ import static org.junit.Assert.assertEquals;
 
 public class AuthorshipDetectorTest {
 
-    private static final String TEXT_DIR = "./resources/mysteryFiles/text.txt";
-    private static final String SIGNATURES_DIR = "./resources/signatures/knownSignatures.txt";
+    private static final String SEPARATOR = File.separator;
+
+    private static final String TEXT_DIR =
+            String.join(SEPARATOR, ".", "resources", "mysteryFiles", "text.txt");
+    private static final String SIGNATURES_DIR =
+            String.join(SEPARATOR, ".", "resources", "signatures", "knownSignatures.txt");
+
     private static final double[] WEIGHTS = {11, 33, 50, 0.4, 4};
 
     private AuthorshipDetector authorshipDetector;
@@ -26,7 +32,7 @@ public class AuthorshipDetectorTest {
     @Test
     public void givenTextFileWhenFindAuthorThenReturnCorrectAuthorOfText() throws FileNotFoundException {
         String author = authorshipDetector.findAuthor(new FileInputStream(TEXT_DIR));
-//        assertEquals("Lewis Carroll", author);
+        assertEquals("Douglas Adams", author);
     }
 
     @Test(expected = IllegalArgumentException.class)

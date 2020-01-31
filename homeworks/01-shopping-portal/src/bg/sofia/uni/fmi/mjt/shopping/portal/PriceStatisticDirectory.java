@@ -6,7 +6,6 @@ import bg.sofia.uni.fmi.mjt.shopping.portal.offer.Offer;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,12 +25,8 @@ class PriceStatisticDirectory {
         }
 
         List<PriceStatistic> values = new ArrayList<>(priceStatistics.values());
-        values.sort(new Comparator<PriceStatistic>() {
-            @Override
-            public int compare(PriceStatistic o1, PriceStatistic o2) {
-                return o2.getDate().compareTo(o1.getDate());
-            }
-        });
+        values.sort((priceStatistic, priceStatistic1) ->
+                priceStatistic1.getDate().compareTo(priceStatistic.getDate()));
         return values;
     }
 

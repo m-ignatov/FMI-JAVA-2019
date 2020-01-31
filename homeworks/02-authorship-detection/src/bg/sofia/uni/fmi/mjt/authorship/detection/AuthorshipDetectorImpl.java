@@ -51,12 +51,13 @@ public class AuthorshipDetectorImpl implements AuthorshipDetector {
     }
 
     private String parseText(InputStream mysteryText) {
-        String text = null;
+        String text;
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(mysteryText))) {
             text = bufferedReader.lines()
                     .collect(Collectors.joining("\n"));
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException("Failed to parse mystery text");
         }
         return text;
     }
@@ -187,6 +188,7 @@ public class AuthorshipDetectorImpl implements AuthorshipDetector {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException("Failed to load signatures file");
         }
         return authorSignatures;
     }
@@ -201,7 +203,7 @@ public class AuthorshipDetectorImpl implements AuthorshipDetector {
 
     private void validate(Object object) {
         if (object == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Given object is null");
         }
     }
 }

@@ -92,11 +92,7 @@ public class ShoppingDirectoryImpl implements ShoppingDirectory {
     }
 
     private List<Offer> sortByTotalPrice(List<Offer> offers) {
-        offers.sort(new Comparator<Offer>() {
-            public int compare(Offer o1, Offer o2) {
-                return Double.compare(o1.getTotalPrice(), o2.getTotalPrice());
-            }
-        });
+        offers.sort(Comparator.comparingDouble(Offer::getTotalPrice));
         return offers;
     }
 }

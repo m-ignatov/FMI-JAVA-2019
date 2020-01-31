@@ -14,7 +14,7 @@ public interface AuthorshipDetector {
      *
      * @throws IllegalArgumentException if @mysteryText is null
      */
-    LinguisticSignature calculateSignature(InputStream mysteryText) throws Exception;
+    LinguisticSignature calculateSignature(InputStream mysteryText);
 
     /**
      * Returns a non-negative real number indicating the similarity between @firstSignature and @secondSignature.
