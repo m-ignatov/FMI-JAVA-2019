@@ -102,4 +102,5 @@ public final class TrendingVideo {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }
